@@ -1,5 +1,5 @@
 {
-  "name": "webPackStarterKit",
+  "name": "webpackstarterkit",
   "version": "1.0.0",
   "description": "Webpack starter kit",
   "main": "build.js",
