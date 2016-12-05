@@ -1,11 +1,26 @@
 **Webpack Starter Kit**
 
-Firstly you have to have:
+**How to use**
+- Clone this repository
 - Nodejs installed (npm install webpack -g)
+- Run npm install
+- Run npm start
+- Open localhost:3000 in your browser
+- You can delete the dev folder or modify it to your own needs.
+- For the production mode run npm build.
 
-After that you can install the webpack starter kit:
-- npm install
 
-Then you can choose between:
-- npm start (development mode)
-- npm build (production mode)
+
+**Feedback**
+
+Let is know of any Issues. Pull requests will be considered.
+
+
+**License**
+
+The ISC License
+
+
+
+
+Copyright (c) 2016 Valerio Pisapia
