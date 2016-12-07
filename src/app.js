@@ -1,3 +1,5 @@
+"use strict";
+
 require('./assets/scss/style.scss');
 require.context("./", true, /^\.\/.*\.html/);
 
@@ -8,5 +10,6 @@ let checkName= (firstName, lastName) => {
         console.log('You are Valerio Pisapia');
     }
 }
+
 
 checkName('Valerio', 'xxxxx');
