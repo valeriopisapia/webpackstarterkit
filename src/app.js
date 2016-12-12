@@ -11,5 +11,6 @@ let checkName= (firstName, lastName) => {
     }
 }
 
+checkName();
 
-checkName('Valerio', 'xxxxx');
+module.exports = checkName;

@@ -6,13 +6,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackUglifyJsPlugin = require('webpack-uglify-js-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackStripLoader = require('strip-loader');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
+const WebpackStableModuleIdAndHash = require('webpack-stable-module-id-and-hash');
+
 const path = require('path');
 const PROD = JSON.parse(process.env.PROD_ENV || '0');
+
 
 let pathEnv = {
     src: 'src',
     dev : 'dev',
-    prod: 'dist'
+    prod: 'dist',
+    vend: 'node_modules'
 };
 
 let plugins = [
@@ -34,19 +42,26 @@ let plugins = [
         hash: true,
         inject: true,
         appMountId: 'app',
+        filename: 'index.html',
         template: 'ejs!src/index.ejs'
-    })
+        /*minify: {
+            removeCommets: true,
+            collapseWhitespace: true
+        }*/
+    }),
+    new webpack.optimize.OccurenceOrderPlugin()
 ];
 
 let config = {
     context: __dirname,
 	entry: {
-        build: __dirname + '/' + pathEnv.src + '/app.js'
+        vendor: './' + pathEnv.src + '/vendor.js',
+        build:  './' + pathEnv.src + '/app.js'
     },
 	output: {
-	    path: PROD ? pathEnv.prod : pathEnv.dev,
-        filename: '[name].js',
-        publicPath: ''
+	    path: PROD ? path.join(__dirname, pathEnv.prod) : path.join(__dirname, pathEnv.dev),
+        filename: PROD ? '[name].[chunkhash].js' : '[name].js',
+        chunkFilename: PROD ? '[name].[chunkhash].js' : '[name].js'
 	},
 	module: {
         preLoaders: [
@@ -87,17 +102,28 @@ let config = {
 if (PROD) {
     plugins.push(
         new WebpackUglifyJsPlugin({
-            cacheFolder: path.resolve(__dirname, pathEnv.prod),
-            debug: true,
-            minimize: true,
-            sourceMap: false,
-            output: {
-                comments: false
+                cacheFolder: path.resolve(__dirname, pathEnv.prod),
+                debug: true,
+                minimize: true,
+                sourceMap: false,
+                output: {
+                    comments: false
+                },
+                compressor: {
+                    warnings: false
+                }
             },
-            compressor: {
-                warnings: false
-            }
-        })
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ["vendor"],
+                minChunks: Infinity
+            }),
+            new WebpackMd5Hash(),
+            new ManifestPlugin(),
+            new InlineManifestWebpackPlugin({
+                name: 'webpackManifest'
+            }),
+            new WebpackStableModuleIdAndHash()
+        )
     );
 
     config.module.loaders.push({

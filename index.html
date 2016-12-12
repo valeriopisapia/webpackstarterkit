@@ -2,11 +2,13 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="./dist/style.css">
+
 </head>
 <body>
 <h1>Hello World</h1>
 <img src="./src/assets/images/what-is-webpack.png" alt="" />
-<script type="text/javascript" src="./dist/build.js"></script>
+
+<%=htmlWebpackPlugin.files.webpackManifest%>
+
 </body>
 </html>

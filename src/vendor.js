@@ -1,3 +1,3 @@
-/**
- * Created by valeriopisapia on 12/12/16.
- */
+"use strict";
+
+module.exports = "I'm a vendor module";
