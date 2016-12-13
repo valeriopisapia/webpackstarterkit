@@ -2,12 +2,12 @@
 
 **How to use**
 - Clone this repository
-- Nodejs installed (npm install webpack -g)
-- Run npm install
-- Run npm start
+- Nodejs installed (_npm install webpack -g_)
+- Run _npm install_
+- Run _npm start_
 - Open localhost:3000 in your browser
 - You can delete the dev folder or modify it to your own needs.
-- For the production mode run npm build.
+- For the production mode run _npm run build_.
 
 
 

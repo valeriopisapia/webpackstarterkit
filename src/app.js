@@ -12,5 +12,6 @@ let checkName= (firstName, lastName) => {
 }
 
 checkName();
+checkName('Valerio', 'Pisapia');
 
 module.exports = checkName;

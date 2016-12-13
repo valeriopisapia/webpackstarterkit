@@ -11,6 +11,7 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const WebpackStableModuleIdAndHash = require('webpack-stable-module-id-and-hash');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const path = require('path');
 const PROD = JSON.parse(process.env.PROD_ENV || '0');
@@ -20,7 +21,7 @@ let pathEnv = {
     src: 'src',
     dev : 'dev',
     prod: 'dist',
-    vend: 'node_modules'
+    vend: 'node_modules'  //maybe you can change it with bower or anything else or delete it.
 };
 
 let plugins = [
@@ -49,7 +50,11 @@ let plugins = [
             collapseWhitespace: true
         }*/
     }),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new CleanWebpackPlugin(['dev', 'dist'], {
+        verbose: true,
+        dry: false
+    })
 ];
 
 let config = {
